@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        // penggunaan komponen "components/namaComponents",
+        "baseUrl": ".",
+        "paths": {
+            // penggunaan komponen / helpers "@/components/namaComponents"
+            "@/components/*": [
+                "components/*"
+            ],
+            "@/utils/*": [
+                "utils/*"
+            ],
+            "@/helpers/*": [
+                "helpers/*"
+            ],
+            "@/store/*": [
+                "store/*"
+            ]
+        }
+    }
+}
