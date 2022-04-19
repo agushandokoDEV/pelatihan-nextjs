@@ -1,66 +1,29 @@
 import * as React from 'react';
-import { styled, useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Drawer from '@mui/material/Drawer';
+import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Logout, PersonAdd, Settings } from '@mui/icons-material';
 import Head from 'next/head';
 import { alpha, Avatar, Box, InputBase, Badge, Menu, MenuItem, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import ListItemButton from '@mui/material/ListItemButton';
-import Paper from '@mui/material/Paper';
-import Tooltip from '@mui/material/Tooltip';
-import ArrowRight from '@mui/icons-material/ArrowRight';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import Home from '@mui/icons-material/Home';
-import People from '@mui/icons-material/People';
-import PermMedia from '@mui/icons-material/PermMedia';
-import Dns from '@mui/icons-material/Dns';
-import Public from '@mui/icons-material/Public';
-import Image from 'next/image';
-import DraftsIcon from '@mui/icons-material/Drafts';
+import DrawerSidebar from './sidebar/DrawerSidebar';
 
 const drawerWidth = 250;
 
-const data = [
-    { icon: <People />, label: 'Authentication' },
-    { icon: <Dns />, label: 'Database' },
-    { icon: <PermMedia />, label: 'Storage' },
-    { icon: <Public />, label: 'Hosting' },
-];
-
-const FireNav = styled(List)({
-    '& .MuiListItemButton-root': {
-        paddingLeft: 24,
-        paddingRight: 24,
-    },
-    '& .MuiListItemIcon-root': {
-        minWidth: 0,
-        marginRight: 16,
-    },
-    '& .MuiSvgIcon-root': {
-        fontSize: 20,
-    },
-});
-
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
+        backgroundColor: '#F6FAFF',
+        // minHeight: 300,
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -156,26 +119,24 @@ const _onLogout = () => {
 
 const BaseLayout = (props) => {
 
-    const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [openMenu, setOpenMenu] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openAnchor = Boolean(anchorEl);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+    // const handleDrawerOpen = () => {
+    //     setOpen(true);
+    // };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    // const handleDrawerClose = () => {
+    //     setOpen(false);
+    // };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleClick = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
     // const router = useRouter();
     // const { auth } = useSelector(state => state);
@@ -187,7 +148,7 @@ const BaseLayout = (props) => {
     //     }
     // }, [auth])
 
-    const { children, maxwidth } = props;
+    const { children } = props;
     return (
         <React.Fragment>
             <Head>
@@ -338,151 +299,7 @@ const BaseLayout = (props) => {
                         Logout
                     </MenuItem>
                 </Menu>
-                <Drawer
-                    sx={{
-                        width: drawerWidth,
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            width: drawerWidth,
-                            // boxSizing: 'border-box',
-                        },
-                    }}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}>
-                    {/* <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
-                            <MenuIcon />
-                        </IconButton>
-                    </DrawerHeader> */}
-                    <Box sx={{ display: 'flex' }}>
-                        <ThemeProvider
-                            theme={createTheme({
-                                components: {
-                                    MuiListItemButton: {
-                                        defaultProps: {
-                                            disableTouchRipple: true,
-                                        },
-                                    },
-                                },
-                                palette: {
-                                    mode: 'dark',
-                                    primary: { main: 'rgb(102, 157, 246)' },
-                                    background: { paper: 'rgb(5, 30, 52)' },
-                                },
-                            })}>
-                            <Paper
-                                flex={1}
-                                elevation={0}
-                                sx={{
-                                    maxWidth: drawerWidth - 1,
-                                    borderRadius: 0,
-                                    height: '100vh',
-                                    width: '100%'
-                                }}>
-                                <FireNav component="nav" disablePadding>
-                                    <DrawerHeader>
-                                        <Image
-                                            src="/logo.png"
-                                            width={100}
-                                            height={30}
-                                        />
-                                        {/* <ListItemButton
-                                            component="div"
-                                            href="#customized-list"
-                                            sx={{
-                                                '&:hover': {
-                                                    backgroundColor: 'transparent'
-                                                }
-                                            }}>
-                                            <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
-                                            <ListItemText
-                                                sx={{ my: 0 }}
-                                                primary="Firebash"
-                                                primaryTypographyProps={{
-                                                    fontSize: 20,
-                                                    fontWeight: 'medium',
-                                                    letterSpacing: 0,
-                                                }}
-                                            />
-                                        </ListItemButton> */}
-                                        {/* <IconButton onClick={handleDrawerClose}>
-                                            <MenuIcon />
-                                        </IconButton> */}
-                                    </DrawerHeader>
-
-                                    <Divider />
-                                    <ListItemButton sx={{ borderBottom: '0.1px dotted rgba(255, 255, 255, 0.12);' }}>
-                                        <ListItemIcon>
-                                            <DraftsIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Drafts" />
-                                    </ListItemButton>
-                                    <Box
-                                        sx={{
-                                            bgcolor: openMenu ? 'rgba(71, 98, 130, 0.2)' : null,
-                                            pb: openMenu ? 2 : 0,
-                                            borderBottom: '1px dotted rgba(255, 255, 255, 0.12);'
-                                        }}>
-                                        <ListItemButton
-                                            alignItems="flex-start"
-                                            onClick={() => setOpenMenu(!openMenu)}
-                                            sx={{
-                                                px: 3,
-                                                pt: 2.5,
-                                                pb: openMenu ? 0 : 2.5,
-                                                '&:hover, &:focus': { '& svg': { opacity: openMenu ? 1 : 0 } },
-                                            }}>
-                                            <ListItemText
-                                                primary="Build"
-                                                primaryTypographyProps={{
-                                                    fontSize: 15,
-                                                    fontWeight: 'medium',
-                                                    lineHeight: '20px',
-                                                    mb: '2px',
-                                                }}
-                                                secondary="tes"
-                                                secondaryTypographyProps={{
-                                                    noWrap: true,
-                                                    fontSize: 12,
-                                                    lineHeight: '16px',
-                                                    color: openMenu ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.5)',
-                                                }}
-                                                sx={{ my: 0 }}
-                                            />
-                                            <KeyboardArrowDown
-                                                sx={{
-                                                    mr: -1,
-                                                    opacity: 0,
-                                                    transform: openMenu ? 'rotate(-180deg)' : 'rotate(0)',
-                                                    transition: '0.2s',
-                                                }}
-                                            />
-                                        </ListItemButton>
-                                        {openMenu &&
-                                            data.map((item) => (
-                                                <ListItemButton
-                                                    key={item.label}
-                                                    sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
-                                                >
-                                                    <ListItemIcon sx={{ color: 'inherit' }}>
-                                                        {item.icon}
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary={item.label}
-                                                        primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
-                                                    />
-                                                </ListItemButton>
-                                            ))}
-
-                                    </Box>
-
-                                </FireNav>
-                            </Paper>
-                        </ThemeProvider>
-                    </Box>
-
-                </Drawer>
+                <DrawerSidebar open={open} drawerWidth={drawerWidth} />
                 <Main open={open}>
                     <DrawerHeader />
                     {children}
